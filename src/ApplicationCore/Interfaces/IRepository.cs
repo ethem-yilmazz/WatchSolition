@@ -12,6 +12,7 @@ namespace ApplicationCore.Interfaces
 	{
 		public Task<T?> GetByIdAsync(int id);
 		public Task<List<T>> GetAllAsync(ISpecification<T> specification);
+		public Task<List<T>> GetAllAsync();
 		public Task<T> AddAsync(T entity);
 		public Task UpdateAsync(T entity);
 		public Task DeleteAsync(T entity);
