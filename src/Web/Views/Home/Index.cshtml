@@ -1,23 +1,62 @@
-﻿@using ApplicationCore.Entities
-@using ApplicationCore.Interfaces;
-@inject IRepository<Product> ProductRepo
+﻿@model HomeViewModel
 @{
 	ViewData["Title"] = "Home Page";
 }
 
-<h1>Products (Test)</h1>
+<div class="card mb-3">
+	<div class="card-body">
+		<form class="row align-items-center" method="get">
+			<div class="col-auto">
+				<label>Category</label>
+			</div>
+			<div class="col-auto">
+				<select class="form-select" asp-for="CategoryId" asp-items="Model.Categories" >
+					<option value="">Choose</option>
+				</select>
+			</div>
+			<div class="col-auto">
+				<label>Brand</label>
+			</div>
+			<div class="col-auto">
+				<select class="form-select" asp-for="BrandId" asp-items="Model.Brands">
+					<option value="">Choose</option>
+				</select>
+			</div>
+			<div class="col-auto">
+				<button class="btn btn-primary">Filter</button>
+			</div>
+		</form>
+	</div>
+</div>
 
-@foreach (var product in await ProductRepo.GetAllAsync())
-{
-	<p>
-		<img src="~/img/products/@product.PictureUri" height="24" />
-		@product.Id, @product.Name, @product.Price
-	</p>
-}
+<div class="row">
+	@foreach (var product in Model.CatalogItems)
+	{
+		<div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+			<div class="product-container shadow p-3">
+				<div class="product-image">
+					<img src="~/img/products/@product.PictureUri" alt="@product.Name" class="w-100" />
+				</div>
+				<div class="product-name my-2 h6" title="@product.Name">
+					@product.Name
+				</div>
+				<div class="d-flex justify-content-between align-items-center">
+					@product.Price.ToString("c2")
+					<a href="#" class="btn btn-sm btn-success">
+						<i class="fa-solid fa-cart-plus"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+
+	}
+</div>
 @*
 	Todo:
 	*Responsive Grid,
 	*Filter by category,brand
 	*Pagination
 *@
+
+
 

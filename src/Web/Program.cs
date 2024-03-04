@@ -3,11 +3,14 @@ using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Web.Interfaces;
+using Web.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 
 
 builder.Services.AddDbContext<WatchWorldContext>(options=>
@@ -19,6 +22,7 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("AppIdentityDbContex
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddScoped(typeof(IRepository<>),typeof(EfRepository<>));
+builder.Services.AddScoped<IHomeViewModelService,HomeViewModelService>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
 	.AddRoles<IdentityRole>()
@@ -41,6 +45,8 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseRequestLocalization("en-US");
 
 app.UseRouting();
 
