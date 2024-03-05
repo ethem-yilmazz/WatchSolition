@@ -18,16 +18,19 @@ namespace Web.Services
 			_categoryRepo = categoryRepo;
 			_brandRepo = brandRepo;
 		}
-		public async Task<HomeViewModel> GetHomeViewModelAsync(int? categoryId, int? brandId, int pageId )
+		public async Task<HomeViewModel> GetHomeViewModelAsync(int? categoryId, int? brandId, int pageId)
 		{
 			var specProducts = new CatalogFilterSpecification(categoryId, brandId);
-			var products = await _productRepo.GetAllAsync(specProducts);
+			var totalItems = await _productRepo.CountAsync(specProducts);
+
+			var specProductsPaginated=new CatalogFilterSpecification(categoryId, brandId,(pageId-1)*Constance.ITEM_PER_PAGE,Constance.ITEM_PER_PAGE);
+			var products = await _productRepo.GetAllAsync(specProductsPaginated);
 
 			var vm = new HomeViewModel()
 			{
 				BrandId = brandId,
 				CategoryId = categoryId,
-				CatalogItems = products.Select(x=> new CatalogItemViewModel()
+				CatalogItems = products.Select(x => new CatalogItemViewModel()
 				{
 					Id = x.Id,
 					Name = x.Name,
@@ -35,7 +38,13 @@ namespace Web.Services
 					PictureUri = x.PictureUri ?? "noimage.jpg"
 				}).ToList(),
 				Brands = (await _brandRepo.GetAllAsync()).Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList(),
-				Categories = (await _categoryRepo.GetAllAsync()).Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList()
+				Categories = (await _categoryRepo.GetAllAsync()).Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList(),
+				PaginationInfo = new PaginationInfoViewModal()
+				{
+					TotalItems =totalItems,
+					ItemsOnPage =products.Count,
+					PageId = pageId,
+				}
 			};
 			return vm;
 		}
