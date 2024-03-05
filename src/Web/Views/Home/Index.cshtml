@@ -1,6 +1,7 @@
 ﻿@model HomeViewModel
 @{
 	ViewData["Title"] = "Home Page";
+	var pi = Model.PaginationInfo;
 }
 
 <div class="card mb-3">
@@ -10,7 +11,7 @@
 				<label>Category</label>
 			</div>
 			<div class="col-auto">
-				<select class="form-select" asp-for="CategoryId" asp-items="Model.Categories" >
+				<select class="form-select" asp-for="CategoryId" asp-items="Model.Categories">
 					<option value="">Choose</option>
 				</select>
 			</div>
@@ -50,7 +51,60 @@
 		</div>
 
 	}
+	<p class="text-center">Showing @Model.PaginationInfo.RageStart - @Model.PaginationInfo.RageEnd of @Model.PaginationInfo.TotalItems</p>
 </div>
+<nav aria-label="Page navigation example">
+	<ul class="pagination justify-content-center">
+		@if (pi.HasPrevious)
+		{
+			<li class="page-item">
+				<a asp-route-CategoryId="@Model.CategoryId" asp-route-BrandId="@Model.BrandId" asp-route-PageId="@(pi.PageId - 1)" class="page-link" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+				</a>
+			</li>
+		}
+		else
+		{
+			<li class="page-item disabled">
+				<a class="page-link"><span aria-hidden="true">&laquo;</span></a>
+			</li>
+		}
+
+		@foreach (var i in pi.PageNumber)
+		{
+			if (i== -1)
+			{
+				<li class="page-item  @(i == pi.PageId ? "active" : "")">
+					<a class="page-link">&hellip;</a>
+				</li>
+			}
+			else
+			{
+				<li class="page-item @(i == pi.PageId ? "active" : "")">
+					<a asp-route-CategoryId="@Model.CategoryId" asp-route-BrandId="@Model.BrandId" asp-route-PageId="@i" class="page-link">@i</a>
+				</li>
+			}
+		}
+
+		@if (pi.HasNext)
+		{
+			<li class="page-item">
+				<a asp-route-CategoryId="@Model.CategoryId" asp-route-BrandId="@Model.BrandId" asp-route-PageId="@(pi.PageId + 1)" class="page-link" aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+		}
+		else
+		{
+			<li class="page-item disabled">
+				<a class="page-link"><span aria-hidden="true">&raquo;</span></a>
+			</li>
+		}
+	</ul>
+</nav>
+
+
+
 @*
 	Todo:
 	*Responsive Grid,

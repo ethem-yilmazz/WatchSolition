@@ -9,7 +9,7 @@ namespace Web.Models
         public List<SelectListItem> Categories { get; set; } = new();
         public int? CategoryId { get; set; }
         public int? BrandId { get; set; }
-        public PaginationInfoViewModal PaginationInfo { get; set; } = null;
+        public PaginationInfoViewModal PaginationInfo { get; set; } = null!;
 
 
 
