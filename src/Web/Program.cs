@@ -1,4 +1,5 @@
 using ApplicationCore.Interfaces;
+using ApplicationCore.Services;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -21,7 +22,9 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("AppIdentityDbContex
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped(typeof(IRepository<>),typeof(EfRepository<>));
+builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddScoped<IHomeViewModelService,HomeViewModelService>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
