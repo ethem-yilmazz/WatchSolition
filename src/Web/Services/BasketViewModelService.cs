@@ -6,7 +6,7 @@ using Web.Models;
 
 namespace Web.Services
 {
-	public class BasketViewModelService : IBasketViewModelService
+    public class BasketViewModelService : IBasketViewModelService
 	{
 		private readonly IBasketService _basketService;
 		private readonly IHttpContextAccessor _httpContextAccessor;
@@ -49,5 +49,10 @@ namespace Web.Services
 			var basket = await _basketService.GetOrCreateBasketAsync(BuyerId);
 			return basket.ToBasketViewModel();
 		}
-	}
+
+        public async Task EmptyBasketAsync()
+        {
+			 await _basketService.EmptyBasketAsync(BuyerId);
+        }
+    }
 }
