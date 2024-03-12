@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Constants.Entities;
+﻿using ApplicationCore.Entities;
 using Ardalis.Specification;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Spesifications
 {
-	public class BasketWithItemsSpecification : Specification<Basket>
+    public class BasketWithItemsSpecification : Specification<Basket>
 	{
 		public BasketWithItemsSpecification(string buyerId)
 		{

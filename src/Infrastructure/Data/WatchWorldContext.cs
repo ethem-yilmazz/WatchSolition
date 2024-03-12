@@ -1,5 +1,4 @@
-﻿using ApplicationCore.Constants.Entities;
-using ApplicationCore.Entities;
+﻿using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 

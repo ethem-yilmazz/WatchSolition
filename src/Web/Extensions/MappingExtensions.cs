@@ -1,9 +1,9 @@
-﻿using ApplicationCore.Constants.Entities;
+﻿using ApplicationCore.Entities;
 using Web.Models;
 
 namespace Web.Extensions
 {
-	public static class MappingExtensions
+    public static class MappingExtensions
 	{
 		public static BasketViewModel ToBasketViewModel(this Basket basket)
 		{

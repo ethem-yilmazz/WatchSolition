@@ -1,5 +1,4 @@
-﻿using ApplicationCore.Constants.Entities;
-using ApplicationCore.Entities;
+﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Spesifications;
 using System;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
-	public class BasketService : IBasketService
+    public class BasketService : IBasketService
 	{
 		private readonly IRepository<Basket> _basketRepo;
 		private readonly IRepository<BasketItem> _basketItemRepo;
