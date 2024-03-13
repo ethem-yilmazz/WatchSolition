@@ -9,8 +9,8 @@ namespace Infrastructure.Data
 	{
 		public WatchWorldContext(DbContextOptions<WatchWorldContext> options) : base(options)
 		{
-
-		}
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        }
 		public DbSet<Brand> Brands { get; set; }
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Product> Products { get; set; }
@@ -18,7 +18,7 @@ namespace Infrastructure.Data
 		public DbSet<BasketItem> BasketItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
-
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
